@@ -23,8 +23,10 @@ class AutoClicker:
     def click_loop(self):
         while self.running:
             pyautogui.click()
-            interval = random.uniform(0.100, 0.150)
+            subtle_mouse_gittle()  # Add the gittle here
+            interval = random.uniform(0.190, 0.255)
             time.sleep(interval)
+
 
 def listen_keys(clicker, status_label):
     def on_press(key):
@@ -41,6 +43,15 @@ def listen_keys(clicker, status_label):
     listener = keyboard.Listener(on_press=on_press)
     listener.daemon = True
     listener.start()
+
+def subtle_mouse_gittle():
+    # Randomly decide whether to gittle (10% chance each click)
+    if random.random() < 0.1:
+        x, y = pyautogui.position()
+        dx = random.randint(-3, 3)
+        dy = random.randint(-3, 3)
+        pyautogui.moveTo(x + dx, y + dy, duration=random.uniform(0.05, 0.2))
+
 
 def main():
     clicker = AutoClicker()
