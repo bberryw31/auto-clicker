@@ -23,7 +23,7 @@ class AutoClicker:
     def click_loop(self):
         while self.running:
             pyautogui.click()
-            subtle_mouse_gittle()  # Add the gittle here
+            cursor_jitter()  # Simulate subtle twitch
             interval = random.uniform(0.190, 0.255)
             time.sleep(interval)
 
@@ -44,13 +44,15 @@ def listen_keys(clicker, status_label):
     listener.daemon = True
     listener.start()
 
-def subtle_mouse_gittle():
-    # Randomly decide whether to gittle (10% chance each click)
-    if random.random() < 0.1:
+
+def cursor_jitter():
+    if random.random() < 0.15:  # 15% chance to jitter per cycle
         x, y = pyautogui.position()
-        dx = random.randint(-3, 3)
-        dy = random.randint(-3, 3)
-        pyautogui.moveTo(x + dx, y + dy, duration=random.uniform(0.05, 0.2))
+        dx = random.choice([-2, -1, 1, 2])
+        dy = random.choice([-2, -1, 1, 2])
+
+        pyautogui.moveTo(x + dx, y + dy, duration=random.uniform(0.01, 0.03))
+        pyautogui.moveTo(x, y, duration=random.uniform(0.01, 0.03))
 
 
 def main():
